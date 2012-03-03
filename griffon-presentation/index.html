@@ -122,7 +122,7 @@
 					But that's just a taste of how Griffon makes Desktop Development Groovy...
 					<p style="margin-top:40px;">
 					<ul style="line-height:200%;">
-						<li class="fragment">Inspired by Grails</li>
+						<li class="fragment">Inspired by Grails (originally based on a fork of Grails 1.1)</li>
 						<li class="fragment">All of the Goodness of Groovy</li>
 						<li class="fragment">Also Supports Java, Clojure, Scala, Erlang, Jython</li>
 						<li class="fragment">Provides an MVC Architecture</li>
@@ -186,10 +186,20 @@
 				</section>
 				
 				<section>
+					Better Layout Managers
+					<p style="margin-top:40px;">Not specific to Groovy / Griffon, but very popular</p>
+					<ul style="line-height:300%;width:100%;margin-left:400px;margin-top:40px;">
+						<li class="fragment">MigLayout (miglayout.com)</li>
+						<li class="fragment">JGoodies FormLayout (jgoodies.com)</li>
+						<li class="fragment">There's always the trusty BorderLayout...</li>
+				 	<ul>
+				</section>
+				
+				<section>
 					Models
 					<p style="margin-top:40px;">
-					<ul style="line-height:200%;width:100%;margin-left:400px;">
-						<li class="fragment">Typically POGOs, but with @Bindable annotations</li>
+					<ul style="line-height:200%;width:100%;margin-left:200px;">
+						<li class="fragment">Typically POGOs, but with @Bindable annotations (via AST Transforms)</li>
 						<li class="fragment">Automated bi-directional binding</li>
 					</ul>
 					<pre class="fragment"><code class="java">
@@ -232,13 +242,20 @@
 					<section>
 					Controllers
 						<p style="margin-top:40px;">
-						<ul style="line-height:200%;width:100%;margin-left:400px;">
+						<ul style="line-height:200%;width:100%;margin-left:100px;">
 							<li class="non-fragment">Classical MVC Controller</li>
 							<li class="fragment">Responds to Events, Coordinates Model and View(s)</li>
 							<li class="fragment">Model and View are injected</li>
 							<li class="fragment">Perform additional M &amp; V initialization in&nbsp;&nbsp;<code>mvcGroupInit()</code></li>
 							<li class="fragment" style="margin-left:80px;">Receives Map passed from &nbsp;&nbsp;<code>createMVCGroup()</code></li>
 							<li class="fragment">Expose closures &amp; methods to View for Action Callbacks</li>
+							<li class="fragment">Event Dispatch Thread (EDT) concerns handled transparently
+								<p style="font-size:14pt;line-height:200%;margin-top:-50px;">
+								<br/>edt - if in the EDT already, invoke the closure. If not, call invokeAndWait to get to the EDT
+								<br/>doLater - use the EDT through invokeLater
+								<br/>doOutside - run the closure in a new Thread (get out of the EDT)
+								</p>
+							</li> 
 						</ul>
 						</section>
 						<section>
@@ -294,6 +311,25 @@ class MyController {
 					
 
 				</section>
+				
+				<section>
+				<div style="font-size:100pt;margin-top:300px;">Q &amp; A</div>
+				</section>
+				
+				<section>
+					Resources
+					<ul style="line-height:300%;width:100%;margin-top:80px;">
+						<li>Griffon:  http://griffon.codehaus.org <span style="margin-left:40px;">@theaviary</span></li>
+						<li>Groovy: http://groovy.codehaus.org</li>
+						<li>Griffon In Action (MEAP): http://www.manning.com/almiray</li>
+						<li>Andreas Almiray: http://jroller.com/aalmiray  <span style="margin-left:40px;">@aalmiray</span></li>
+						<li>http://techcast.chariotsolutions.com (episode 41)</li>  
+				 	<ul>					
+				</section>
+				
+				<!-- end of slides -->
+
+
 			</div>
 
 
