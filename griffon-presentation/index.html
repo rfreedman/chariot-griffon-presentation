@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		
-		<title>Griffon</title>
+		<title>Griffon - Chariot Day 2012</title>
 
 		<meta name="description" content="An introduction to building Java Swing applications the Groovy way - in Griffon">
 		<meta name="author" content="Rich Freedman">
@@ -52,9 +52,9 @@
 					<p class="fragment">It's <img src="images/groovy-logo-white.png" style="width:300px;height:150px;border:none;vertical-align:middle;"/></p>
 				</section>
 				
-				<section>
+				<section style="margin-top:-100px;">
 					Swing (like the rest of Java) requires a lot of ceremony:
-					<pre><code>
+					<pre style="font-size:12pt;text-align:left;margin-left:80px;margin-top:40px;"><code class="java">
                         package com.chariotsolutions.chariotday;
 
                         import javax.swing.JFrame;
@@ -87,31 +87,31 @@
 
                         }
 					</code></pre>
-					And this is just a simple window...
-					<p><img src="images/blow-your-brains-out.jpg" style="width:300px;height:200px;"></p>
+					<p>And this is just a simple window...</p>
+					<img src="images/blow-your-brains-out.jpg" style="width:300px;height:200px;">
 				</section>
 				
-				<section>
+				<section style="margin-top:-100px;">
 					Griffon uses Groovy's SwingBuilder DSL, so Views are declarative
-					<pre><code class="java">
-                        package simplegriffon
+					<pre style="font-size:16pt;text-align:left;margin-left:80px;margin-top:40px;"><code class="java">
+	package simplegriffon
 
-                        application(
-                            title: 'Simple Griffon Example', pack: true) {
-                            panel {
-                               borderLayout()
-                               label(constraints: "Center", text:"Griffon's SwingBuilder is decalarative!", 
-                                    font: new Font("Georgia", Font.PLAIN, 40))
-                            }
+	application(
+	    title: 'Simple Griffon Example', pack: true) {
+	    panel {
+	       borderLayout()
+	       label(constraints: "Center", text:"Griffon's SwingBuilder is decalarative!", 
+	            font: new Font("Georgia", Font.PLAIN, 40))
+	    }
 
-                            doLater {
-                                app.windowManager.getAt(0).setLocationRelativeTo(null)
-                            }
-                        }
+	    doLater {
+	        app.windowManager.getAt(0).setLocationRelativeTo(null)
+	    }
+	}
 					</code></pre>
 					<p class="fragment">Notice:</p>
 					<ul style="line-height:200%;">
-						<li class="fragment">No imports (many useful imports are defaulted)
+						<li class="fragment">No imports (common imports are defaulted)
 						<li class="fragment">No main() method required (Griffon uses an MVC model - this is the View class)</li>
 						<li class="fragment">Most of the UI construction is declarative</li>
 						<p class="fragment"><img src="images/groovy-logo-white.png" style="width:300px;height:150px;border:none;middle;display:block;margin-left:auto;margin-right:auto;"/></p>
@@ -124,7 +124,7 @@
 					<ul style="line-height:200%;">
 						<li class="fragment">Inspired by Grails</li>
 						<li class="fragment">All of the Goodness of Groovy</li>
-						<li class="fragment">Supports Java, Clojure, Scala, Erlang, Jython</li>
+						<li class="fragment">Also Supports Java, Clojure, Scala, Erlang, Jython</li>
 						<li class="fragment">Provides an MVC Architecture</li>
 						<li class="fragment">Interactive Command Line with Artifact Generation</li>
 						<li class="fragment">Like Grails, builds with Gradle</li>
@@ -134,7 +134,171 @@
 					</ul>
 					</p>
 				</section>
+				
+				<section>
+					MVC Architecture similar to Grails
+					<div style="margin-top:40px;text-align:left;" class="fragment">
+						Directory Structure:
+						<ul style="list-style-type:none;line-height:200%;width:100%;margin-left:40px">
+							<li>grails-app --> griffon-app</li>
+								<ul style="list-style-type:none;line-height:200%;width:100%;margin-left:80px;">
+									<li>- conf</li>
+									<li>- controllers</li>
+									<li>- models</li>
+									<li>- serivces</li>
+									<li>- views</li>
+								</ul>
+						</ul>
+					</div>
+					<div style="margin-top:40px;text-align:left;" class="fragment">
+						Model, View, &amp; Controller form an 'MVCGroup', where all are initialized together, and injected appropriately, 
+						including service injection into controllers.
+					</div>
+				</section>
+				
+				<section>
+					Command-Line Code Generation similar to Grails, including:
+					<p style="margin-top:40px;">
+					<ul style="line-height:200%;width:100%;margin-left:400px;">
+						<li>create-app</li>
+						<li>create-mvc</li>
+						<li>create-service</li>
+						<li>compile</li>
+						<li>package</li>
+						<li>run-app</li>
+					</ul>
+					</p>
+				</section>
+				
+				<section>
+					Views
+					<p style="margin-top:40px;">
+					<ul style="line-height:200%;width:100%;margin-left:400px;">
+						<li class="non-fragment">Created via SwingBuilder scripts</li>
+						<li class="fragment">Injected with Model &amp; Controller</li>
+						<li class="fragment">
+							Can contain arbitrary Groovy script
+							<div style="font-size:18pt;margin-top:-18pt;">(usually helpers for view creation)</div>
+						</li>
+					</ul>
+					</p>
+					<p class="fragment" style="text-align:left;margin-left:400px;margin-top:100px;">Examples</p>
+				</section>
+				
+				<section>
+					Models
+					<p style="margin-top:40px;">
+					<ul style="line-height:200%;width:100%;margin-left:400px;">
+						<li class="fragment">Typically POGOs, but with @Bindable annotations</li>
+						<li class="fragment">Automated bi-directional binding</li>
+					</ul>
+					<pre class="fragment"><code class="java">
+						import java.beans.PropertyChangeListener;
+						import java.beans.PropertyChangeSupport;
+
+						public class Message {
+						    private String text;
+						    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+						    public String getText() { 
+						        return text; 
+						    }
+
+						    public void setText(String text) { 
+						        pcs.firePropertyChange("text", this.text, this.text = text); 
+						    }
+
+						    public void addPropertyChangeListener(PropertyChangeListener listener) {
+						        pcs.addPropertyChangeListener(listener);
+						    }
+
+						    public void removePropertyChangeListener(PropertyChangeListener listener) {
+						        pcs.removePropertyChangeListener(listener);
+						    }
+						}
+					</code></pre>
+					<div class="fragment">is replaced with:</div>
+					<pre class="fragment"><code class="java">
+						import groovy.beans.Bindable
+
+						class Message {
+						    @Bindable def text
+						}
+					
+					</code></pre>
+				</section>
+				
+				<section>
+					<section>
+					Controllers
+						<p style="margin-top:40px;">
+						<ul style="line-height:200%;width:100%;margin-left:400px;">
+							<li class="non-fragment">Classical MVC Controller</li>
+							<li class="fragment">Responds to Events, Coordinates Model and View(s)</li>
+							<li class="fragment">Model and View are injected</li>
+							<li class="fragment">Perform additional M &amp; V initialization in&nbsp;&nbsp;<code>mvcGroupInit()</code></li>
+							<li class="fragment" style="margin-left:80px;">Receives Map passed from &nbsp;&nbsp;<code>createMVCGroup()</code></li>
+							<li class="fragment">Expose closures &amp; methods to View for Action Callbacks</li>
+						</ul>
+						</section>
+						<section>
+							Controllers
+							<p style="margin-top:40px;">
+								Expose closures &amp; methods to View for Action Callbacks
+								<pre style="font-size:18pt;text-align:left;margin-left:80px;margin-top:40px;"><code class="java">
+class MyController {
+    def action1 = { evt = null ->
+        // do some stuff
+    }
+
+    public void action2() {
+        // do some other stuff
+    }
+}
+
+application(title: 'Action sample', pack: true) {
+    gridLayout(cols: 2, rows: 1) {
+        button 'Action 1', actionPerformed: controller.action1  // closure syntax
+        button 'Action 2', actionPerformed: controller.&action2 // method syntax
+    }
+}
+							</code></pre>
+						</p>
+						</section>
+				</section>
+				
+				
+				<section>
+					Services
+					<p style="margin-top:40px;">
+					<ul style="line-height:200%;width:100%;">
+						<li class="non-fragment">Where the real Business Logic belongs (not in the Controller)</li>
+						<li class="fragment">Create with "Griffon create-service &lt;service-name&gt;"</li>
+						<li class="fragment">Singletons</li>
+						<li class="fragment">
+							Inject into Controller by name (convention over configuration)
+							<pre style="font-size:18pt;text-align:left;margin-left:80px;margin-top:40px;"><code class="java">
+class MathService {
+    def sum(a, b) { a + b }
+}
+
+class MyController {
+    def mathService
+    def action = {
+        model.result = mathService.sum model.a, model.b
+    }
+}
+							</code></pre>
+						</li>
+					</ul>
+					
+
+				</section>
 			</div>
+
+
+
+
 
 			<!-- The navigational controls UI -->
 			<aside class="controls">
